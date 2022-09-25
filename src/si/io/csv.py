@@ -4,7 +4,7 @@ from si.data.dataset import Dataset
 
 
 def read_csv(filename: str,
-             sep: str = None,
+             sep: str = ',',
              features: bool = False,
              label: bool = False) -> Dataset:
     """
