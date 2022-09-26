@@ -75,7 +75,8 @@ class SelectKBest:
             A labeled dataset with the k highest scoring features.
         """
         idxs = np.argsort(self.F)[-self.k:]
-        return Dataset(dataset.X[:, idxs], dataset.y, dataset.features[idxs], dataset.label)
+        features = np.array(dataset.features)[idxs]
+        return Dataset(X=dataset.X[:, idxs], y=dataset.y, features=list(features), label=dataset.label)
 
     def fit_transform(self, dataset: Dataset) -> Dataset:
         """

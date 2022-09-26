@@ -70,7 +70,8 @@ class VarianceThreshold:
 
         features_mask = self.variance > self.threshold
         X = X[:, features_mask]
-        return Dataset(X, dataset.y, dataset.features[features_mask], dataset.label)
+        features = np.array(dataset.features)[features_mask]
+        return Dataset(X=X, y=dataset.y, features=list(features), label=dataset.label)
 
     def fit_transform(self, dataset: Dataset) -> Dataset:
         """
@@ -85,3 +86,14 @@ class VarianceThreshold:
         """
         self.fit(dataset)
         return self.transform(dataset)
+
+
+if __name__ == '__main__':
+    from si.data.dataset import Dataset
+
+    dataset = Dataset.from_random(100, 10, 2)
+    dataset.X[:, 0] = 0
+
+    selector = VarianceThreshold()
+    dataset = selector.fit_transform(dataset)
+    print(dataset.features)
