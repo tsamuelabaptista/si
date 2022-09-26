@@ -1,7 +1,6 @@
 from typing import Tuple, Union
 
 import numpy as np
-import pandas as pd
 from scipy import stats
 
 from si.data.dataset import Dataset
@@ -47,10 +46,6 @@ if __name__ == '__main__':
     from si.data.dataset import Dataset
     from si.io.csv import read_csv
 
-    # df = pd.read_csv(r'C:\Users\BiSBII\Dropbox\SIB-2022-2023\prática\si\datasets\cpu.csv')
-    # X = df.drop('perf', axis=1).to_numpy()
-    # y = df['perf'].to_numpy()
-    # dataset = Dataset(X, y, features=df.drop('perf', axis=1).columns, label='perf')
     dataset = read_csv(r'C:\Users\BiSBII\Dropbox\SIB-2022-2023\prática\si\datasets\cpu.csv',
                        features=True, label=True)
 
