@@ -80,7 +80,8 @@ we will not cover this topic in this course.
 
 Note: A python package also contains many configuration files (e.g., _setup.py_, _requirements.txt_, etc.).
 
+## Datasets
+All datasets are available at: [https://www.dropbox.com/sh/oas4yru2r9n61hk/AADpRunbqES44W49gx9deRN5a?dl=0](https://www.dropbox.com/sh/oas4yru2r9n61hk/AADpRunbqES44W49gx9deRN5a?dl=0)
 
 ## Credits
-This package was originally developed by [Vítor Pereira](https://github.com/vmspereira/si) and 
-maintained lately by [Fernando Cruz](https://github.com/cruz-f/si).
+This package is heavily inspired and adtaped from [https://github.com/vmspereira/si](https://github.com/vmspereira/si).
