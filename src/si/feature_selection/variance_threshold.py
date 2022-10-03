@@ -91,9 +91,14 @@ class VarianceThreshold:
 if __name__ == '__main__':
     from si.data.dataset import Dataset
 
-    dataset = Dataset.from_random(100, 10, 2)
-    dataset.X[:, 0] = 0
+    dataset = Dataset(X=np.array([[0, 2, 0, 3],
+                                  [0, 1, 4, 3],
+                                  [0, 1, 1, 3]]),
+                      y=np.array([0, 1, 0]),
+                      features=["f1", "f2", "f3", "f4"],
+                      label="y")
 
     selector = VarianceThreshold()
-    dataset = selector.fit_transform(dataset)
+    selector = selector.fit(dataset)
+    dataset = selector.transform(dataset)
     print(dataset.features)
