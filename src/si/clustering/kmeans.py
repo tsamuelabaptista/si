@@ -3,7 +3,6 @@ from typing import Callable
 import numpy as np
 
 from si.data.dataset import Dataset
-from si.io.csv import read_csv
 from si.statistics.euclidean_distance import euclidean_distance
 
 
@@ -216,11 +215,11 @@ class KMeans:
 
 if __name__ == '__main__':
     from si.data.dataset import Dataset
-    dataset = Dataset.from_random(100, 5)
+    dataset_ = Dataset.from_random(100, 5)
 
-    k = 3
-    kmeans = KMeans(k)
-    res = kmeans.fit_transform(dataset)
-    predictions = kmeans.predict(dataset)
+    k_ = 3
+    kmeans = KMeans(k_)
+    res = kmeans.fit_transform(dataset_)
+    predictions = kmeans.predict(dataset_)
     print(res.shape)
     print(predictions.shape)
