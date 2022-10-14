@@ -18,6 +18,8 @@ class KNNClassifier:
     ----------
     k: int
         The number of nearest neighbors to use
+    distance: Callable
+        The distance function to use
 
     Attributes
     ----------
