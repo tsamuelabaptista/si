@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Union
 
 import numpy as np
 
@@ -59,7 +59,7 @@ class KNNClassifier:
         self.dataset = dataset
         return self
 
-    def _get_closest_label(self, sample: np.ndarray):
+    def _get_closest_label(self, sample: np.ndarray) -> Union[int, str]:
         """
         It returns the closest label of the given sample
 
@@ -70,7 +70,7 @@ class KNNClassifier:
 
         Returns
         -------
-        label: int
+        label: str or int
             The closest label
         """
         # compute the distance between the sample and the dataset
