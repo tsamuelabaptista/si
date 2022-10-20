@@ -84,4 +84,4 @@ Note: A python package also contains many configuration files (e.g., _setup.py_,
 All datasets are available at: [https://www.dropbox.com/sh/oas4yru2r9n61hk/AADpRunbqES44W49gx9deRN5a?dl=0](https://www.dropbox.com/sh/oas4yru2r9n61hk/AADpRunbqES44W49gx9deRN5a?dl=0)
 
 ## Credits
-This package is heavily inspired and adtaped from [https://github.com/vmspereira/si](https://github.com/vmspereira/si).
+This package is heavily inspired and adapted from [https://github.com/vmspereira/si](https://github.com/vmspereira/si).

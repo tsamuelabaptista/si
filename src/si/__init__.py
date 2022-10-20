@@ -6,5 +6,5 @@ __maintainer__ = "Fernando Cruz"
 __email__ = "fernando.cruz@ceb.uminho.pt"
 
 # -----------------------------------------------------------------------------------
-# This package is heavily inspired and adtaped from https://github.com/vmspereira/si
+# This package is heavily inspired and adapted from https://github.com/vmspereira/si
 # -----------------------------------------------------------------------------------
