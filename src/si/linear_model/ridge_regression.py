@@ -118,7 +118,7 @@ class RidgeRegression:
         y_pred = self.predict(dataset)
         return mse(dataset.y, y_pred)
 
-    def cost(self, dataset: Dataset = None) -> float:
+    def cost(self, dataset: Dataset) -> float:
         """
         Compute the cost function (J function) of the model on the dataset using L2 regularization
 

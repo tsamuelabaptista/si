@@ -127,7 +127,7 @@ class LogisticRegression:
         y_pred = self.predict(dataset)
         return accuracy(dataset.y, y_pred)
 
-    def cost(self, dataset) -> float:
+    def cost(self, dataset: Dataset) -> float:
         """
         Compute the cost function (J function) of the model on the dataset using L2 regularization
 
