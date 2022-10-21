@@ -133,7 +133,7 @@ class RidgeRegression:
             The cost function of the model
         """
         y_pred = self.predict(dataset)
-        return (np.sum((y_pred - dataset.y) ** 2) + self.l2_penalty * np.sum(self.theta ** 2)) / (2 * len(dataset.y))
+        return (np.sum((y_pred - dataset.y) ** 2) + (self.l2_penalty * np.sum(self.theta ** 2))) / (2 * len(dataset.y))
 
 
 if __name__ == '__main__':
