@@ -7,12 +7,17 @@ from si.data.dataset import Dataset
 
 class KMer:
     """
-    A nucleotide sequence descriptor that returns the k-mer composition of the sequence.
+    A sequence descriptor that returns the k-mer composition of the sequence.
 
     Parameters
     ----------
     k : int
         The k-mer length.
+
+    Attributes
+    ----------
+    k_mers : list of str
+        The k-mers.
     """
     def __init__(self, k: int = 2):
         """
