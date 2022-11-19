@@ -47,6 +47,11 @@ class Dense:
         ----------
         X: np.ndarray
             The input to the layer.
+
+        Returns
+        -------
+        output: np.ndarray
+            The output of the layer.
         """
         return np.dot(X, self.weights) + self.bias
 
@@ -75,5 +80,10 @@ class SigmoidActivation:
         ----------
         X: np.ndarray
             The input to the layer.
+
+        Returns
+        -------
+        output: np.ndarray
+            The output of the layer.
         """
         return 1 / (1 + np.exp(-X))
