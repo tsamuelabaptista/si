@@ -41,18 +41,18 @@ class Dense:
         self.bias = np.zeros((1, output_size))
         self.X = None
 
-    def forward(self, input: np.ndarray) -> np.ndarray:
+    def forward(self, X: np.ndarray) -> np.ndarray:
         """
         Performs a forward pass of the layer using the given input.
         Returns a 2d numpy array with shape (1, output_size).
 
         Parameters
         ----------
-        input: np.ndarray
+        X: np.ndarray
             The input to the layer.
         """
-        self.X = input
-        return np.dot(input, self.weights) + self.bias
+        self.X = X
+        return np.dot(X, self.weights) + self.bias
 
 
 class SigmoidActivation:
@@ -70,15 +70,15 @@ class SigmoidActivation:
         """
         self.X = None
 
-    def forward(self, input: np.ndarray) -> np.ndarray:
+    def forward(self, X: np.ndarray) -> np.ndarray:
         """
         Performs a forward pass of the layer using the given input.
         Returns a 2d numpy array with shape (1, output_size).
 
         Parameters
         ----------
-        input: np.ndarray
+        X: np.ndarray
             The input to the layer.
         """
-        self.X = input
-        return 1 / (1 + np.exp(-input))
+        self.X = X
+        return 1 / (1 + np.exp(-X))
