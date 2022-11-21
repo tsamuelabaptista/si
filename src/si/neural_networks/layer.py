@@ -59,11 +59,6 @@ class Dense:
 class SigmoidActivation:
     """
     A sigmoid activation layer.
-
-    Attributes
-    ----------
-    X : np.ndarray
-        The input to the layer.
     """
     def __init__(self):
         """
