@@ -19,6 +19,7 @@ class Dense:
     bias: np.ndarray
         The bias of the layer.
     """
+
     def __init__(self, input_size: int, output_size: int):
         """
         Initialize the dense layer.
@@ -55,11 +56,17 @@ class Dense:
         """
         return np.dot(X, self.weights) + self.bias
 
+    def backward(self, error: np.ndarray, learning_rate: float) -> np.ndarray:
+        """
+        """
+        return error
+
 
 class SigmoidActivation:
     """
     A sigmoid activation layer.
     """
+
     def __init__(self):
         """
         Initialize the sigmoid activation layer.
@@ -82,3 +89,8 @@ class SigmoidActivation:
             The output of the layer.
         """
         return 1 / (1 + np.exp(-X))
+
+    def backward(self, error: np.ndarray, learning_rate: float) -> np.ndarray:
+        """
+        """
+        return error
