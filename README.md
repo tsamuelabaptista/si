@@ -1,7 +1,7 @@
-# Sistemas Inteligentes para Bioinformática
+# Sistemas Inteligentes para a Bioinformática
 
 ## Curricular Unit
-Mestrado em Bioinformática, Universidade do Minho, 2022-2023.
+Mestrado em Bioinformática, Universidade do Minho, 2023-2024.
 
 
 ## Description
@@ -13,7 +13,7 @@ Implementations must follow a common and simple API.
 ## Setup
 To get started, fork the repository from GitHub and clone it to your local machine.
 
-Fork the following GitHub repository: https://github.com/cruz-f/si
+Fork the following GitHub repository: https://github.com/jcorreia11/si.git
 ![img.png](docs/img.png)
 
 Then, clone the repository to your local machine:
@@ -84,4 +84,6 @@ Note: A python package also contains many configuration files (e.g., _setup.py_,
 All datasets are available at: [https://www.dropbox.com/sh/oas4yru2r9n61hk/AADpRunbqES44W49gx9deRN5a?dl=0](https://www.dropbox.com/sh/oas4yru2r9n61hk/AADpRunbqES44W49gx9deRN5a?dl=0)
 
 ## Credits
-This package is heavily inspired and adapted from [https://github.com/vmspereira/si](https://github.com/vmspereira/si).
+This package is heavily inspired and adapted from:
+- [https://github.com/vmspereira/si](https://github.com/vmspereira/si)
+- [https://github.com/cruz-f/si](https://github.com/cruz-f/si)
