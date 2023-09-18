@@ -198,39 +198,6 @@ class Dataset:
         y = np.random.randint(0, n_classes, n_samples)
         return cls(X, y, features=features, label=label)
 
-    def dropna(self):
-        """
-        Drops rows with missing values.
-        """
-        nans = np.isnan(self.X).any(axis=1)
-        self.X = self.X[~nans]
-        if self.y is not None:
-            self.y = self.y[~nans]
-        return self
-
-    def fillna(self, value: Union[float, str] = 'mean'):
-        """
-        Fills missing values with a value.
-        """
-        if not isinstance(value, str):
-            self.X = np.nan_to_num(self.X, nan=value)
-        elif value == 'mean':
-            self.X = np.nan_to_num(self.X, nan=np.nanmean(self.X, axis=0))
-        elif value == 'median':
-            self.X = np.nan_to_num(self.X, nan=np.nanmedian(self.X, axis=0))
-        else:
-            raise ValueError(f"Invalid value: {value}")
-        return self
-
-    def remove_by_index(self, index: int):
-        """
-        Removes a row by index.
-        """
-        self.X = np.delete(self.X, index, axis=0)
-        if self.y is not None:
-            self.y = np.delete(self.y, index, axis=0)
-        return self
-
 
 if __name__ == '__main__':
     X = np.array([[1, 2, 3], [4, 5, 6]])
