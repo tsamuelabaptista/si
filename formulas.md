@@ -1,2 +1,2 @@
 
-This sentence uses `$` delimiters to show math inline:  $\sqrt{3x-1}+(1+x)^2$
+$\frac{\partial E}{\partial X}=\left[\frac{\partial E}{\partial x_{1}}\quad\frac{\partial E}{\partial x_{2}}\quad\ddots\ .\quad\frac{\partial E}{\partial x_{i}}\right]$
