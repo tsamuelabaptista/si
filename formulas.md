@@ -152,3 +152,17 @@ $$
 $$
 \frac{\partial E}{\partial B}=\frac{\partial E}{\partial Y}
 $$
+
+### Gradient Descent
+
+To update the weights:
+
+$$
+w_{i}\leftarrow w_{i}-\alpha\frac{\partial E}{\partial w_{i}}
+$$
+
+To update the biases:
+
+$$
+b_{i}\leftarrow b_{i}-\alpha\frac{\partial E}{\partial b_{i}}
+$$
