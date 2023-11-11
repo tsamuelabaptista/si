@@ -299,5 +299,27 @@ V_{t}\=\\beta V_{t-1}\+\\left(1\-\\beta\right)\frac{\partial L}{\partial W}
 $$ 
 
 $$
-W=W-\alpha V_{i}
+W_t=W_{t-1}-\alpha V_{t}
+$$
+
+### Adam:
+
+$$
+m_{t}=\beta_{1}m_{t-1}+\left(1-\beta_{1}\right)\frac{\partial L}{\partial W}
+$$
+
+$$
+v_{t}=\beta_{2}v_{t-1}+\left(1-\beta_{2}\right)\frac{\partial L}{\partial W}^2
+$$
+
+$$
+\hat{m_t}=\frac{m_{t}}{1-\beta_{1}^t}
+$$
+
+$$
+\hat{v_t}=\frac{v_{t}}{1-\beta_{2}^t}
+$$
+
+$$
+W_t = W_t - \alpha \frac{\hat{m_t}}{\sqrt{\hat{v_t}}+\epsilon}
 $$
