@@ -166,3 +166,138 @@ To update the biases:
 $$
 b_{i}\leftarrow b_{i}-\alpha\frac{\partial E}{\partial b_{i}}
 $$
+
+## Activation Functions
+
+### ReLU Activation:
+
+#### Activation function:
+
+$$
+f(x)= 
+\begin{cases}
+    0& \text{if } x < 0\\
+    x& \text{if } x\geq 0
+\end{cases}
+$$
+
+#### Derivative:
+
+$$
+f'(x)= 
+\begin{cases}
+    0& \text{if } x < 0\\
+    1& \text{if } x\geq 0
+\end{cases}
+$$
+
+### Sigmoid Activation:
+
+#### Activation function:
+
+$$
+f(x)={\frac{1}{1+e^{-x}}}
+$$
+
+#### Derivative:
+
+$$
+f'(x)=f(x)(1-f(x))^{2}
+$$
+
+### Tanh Activation:
+
+#### Activation function:
+
+$$
+f(x)=\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
+$$
+
+#### Derivative:
+
+$$
+f'(x)=1-f(x)^2
+$$
+
+### Softmax Activation:
+
+#### Activation function:
+
+$$
+f(x_i) = \frac{e^{x_i}}{\sum_{j} e^{x_j}}
+$$
+
+#### Derivative:
+
+$$
+f'(x)=f(x)(1-f(x))
+$$
+
+## Loss Functions
+
+### MeanSquaredError Loss:
+
+#### Loss function:
+
+$$
+L=\frac{1}{n}\sum_{i}^{n}\bigl(y_{i}-y_{i}^{*}\bigr)^{2}
+$$
+
+#### Derivative:
+
+$$
+{\frac{\partial L}{\partial Y}}=\left[{\frac{\partial L}{\partial y_{1}}}\quad...\quad{\frac{\partial L}{\partial y_{i}}}\right]
+$$
+
+$$
+{}=\frac{2}{n}[y_{1}^* - y_1 \quad ... \quad y_{i}^* - y_i]
+$$
+
+$$
+{}=\frac{2}{n}(Y^* - Y)
+$$
+
+### BinaryCrossEntropy Loss:
+
+#### Loss function:
+
+$$
+L = -\frac{1}{n} \sum_{i=1}^{n} (y_{i} \log(y_{i}^{\*}) + (1 - y_{i}) \log(1 - y_{i}^{\*}))
+$$
+
+#### Derivative:
+
+$$
+{\frac{\partial L}{\partial Y}} = {\frac{-Y}{Y^\*}}-\left({\frac{1-Y}{1-{Y^\*}}}*-1\right)
+$$
+
+$$
+{}={\frac{-Y}{Y^\*}}+{\frac{1-Y}{1-Y^\*}}
+$$
+
+
+### CategoricalCrossEntropy Loss:
+
+#### Loss function:
+
+$$
+L=-\sum_{i=1}^{i=N}y_{i}\log(y_{i}^\*)
+$$
+
+#### Derivative:
+
+$$
+{\frac{\partial L}{\partial Y}} = - \frac{Y}{Y^\*}
+$$
+
+## Optimizers:
+
+### SGD with momentum:
+
+$$
+V_{t}\=\\beta V_{t-1}\+\\left(1\-\\beta\right)\frac{\partial L}{\partial W}
+$$ 
+
+$$
+W=W-\alpha V_{i}
+$$
