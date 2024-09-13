@@ -1,10 +1,12 @@
 import numpy as np
 
+from si.base.model import Model
 from si.data.dataset import Dataset
 from si.metrics.mse import mse
 
 
-class RidgeRegressionLeastSquares:
+class RidgeRegressionLeastSquares(Model):
+    pass
 # implement class
 
 # This is how you can test it against sklearn to check if everything is fine

@@ -2,6 +2,7 @@ from typing import Literal, Tuple, Union
 
 import numpy as np
 
+from si.base.model import Model
 from si.data.dataset import Dataset
 from si.metrics.accuracy import accuracy
 from si.statistics.impurity import gini_impurity, entropy_impurity
@@ -42,13 +43,13 @@ class Node:
         self.value = value
 
 
-class DecisionTreeClassifier:
+class DecisionTreeClassifier(Model):
     """
     Class representing a decision tree classifier.
     """
 
-    def __init__(self, min_sample_split: int = 2, max_depth: int = 10,
-                 mode: Literal['gini', 'entropy'] = 'gini') -> None:
+    def __init__(self, min_sample_split: int = 2, max_depth: int = 10, mode: Literal['gini', 'entropy'] = 'gini',
+                 **kwargs) -> None:
         """
         Creates a DecisionTreeClassifier object.
 
@@ -62,6 +63,7 @@ class DecisionTreeClassifier:
             the mode to use for calculating the information gain.
         """
         # parameters
+        super().__init__(**kwargs)
         self.min_sample_split = min_sample_split
         self.max_depth = max_depth
         self.mode = mode
@@ -212,7 +214,7 @@ class DecisionTreeClassifier:
             print(f'{indent}right: ', end='')
             self.print_tree(tree.right, indent + '  ')
 
-    def fit(self, dataset: Dataset) -> 'DecisionTreeClassifier':
+    def _fit(self, dataset: Dataset) -> 'DecisionTreeClassifier':
         """
         Fits the decision tree classifier to a dataset.
 
@@ -254,7 +256,7 @@ class DecisionTreeClassifier:
         else:
             return self._make_prediction(x, tree.right)
 
-    def predict(self, dataset: Dataset) -> np.ndarray:
+    def _predict(self, dataset: Dataset) -> np.ndarray:
         """
         Makes predictions for a dataset.
 

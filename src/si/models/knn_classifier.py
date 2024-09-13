@@ -2,12 +2,13 @@ from typing import Callable, Union
 
 import numpy as np
 
+from si.base.model import Model
 from si.data.dataset import Dataset
 from si.metrics.accuracy import accuracy
 from si.statistics.euclidean_distance import euclidean_distance
 
 
-class KNNClassifier:
+class KNNClassifier(Model):
     """
     KNN Classifier
     The k-Nearst Neighbors classifier is a machine learning model that classifies new samples based on
@@ -26,7 +27,7 @@ class KNNClassifier:
     dataset: np.ndarray
         The training data
     """
-    def __init__(self, k: int = 1, distance: Callable = euclidean_distance):
+    def __init__(self, k: int = 1, distance: Callable = euclidean_distance, **kwargs):
         """
         Initialize the KNN classifier
 
@@ -38,13 +39,14 @@ class KNNClassifier:
             The distance function to use
         """
         # parameters
+        super().__init__(**kwargs)
         self.k = k
         self.distance = distance
 
         # attributes
         self.dataset = None
 
-    def fit(self, dataset: Dataset) -> 'KNNClassifier':
+    def _fit(self, dataset: Dataset) -> 'KNNClassifier':
         """
         It fits the model to the given dataset
 
@@ -88,7 +90,7 @@ class KNNClassifier:
         labels, counts = np.unique(k_nearest_neighbors_labels, return_counts=True)
         return labels[np.argmax(counts)]
 
-    def predict(self, dataset: Dataset) -> np.ndarray:
+    def _predict(self, dataset: Dataset) -> np.ndarray:
         """
         It predicts the classes of the given dataset
 

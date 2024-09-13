@@ -1,10 +1,11 @@
 import numpy as np
 
+from si.base.model import Model
 from si.data.dataset import Dataset
 from si.metrics.mse import mse
 
 
-class RidgeRegression:
+class RidgeRegression(Model):
     """
     The RidgeRegression is a linear model using the L2 regularization.
     This model solves the linear regression problem using an adapted Gradient Descent technique
@@ -30,8 +31,8 @@ class RidgeRegression:
         For example, theta_zero * 1
     """
 
-    def __init__(self, l2_penalty: float = 1, alpha: float = 0.001, max_iter: int = 1000,
-                 patience: int = 5, scale: bool = True):
+    def __init__(self, l2_penalty: float = 1, alpha: float = 0.001, max_iter: int = 1000, patience: int = 5,
+                 scale: bool = True, **kwargs):
         """
 
         Parameters
@@ -48,6 +49,7 @@ class RidgeRegression:
             Whether to scale the dataset or not
         """
         # parameters
+        super().__init__(**kwargs)
         self.l2_penalty = l2_penalty
         self.alpha = alpha
         self.max_iter = max_iter
@@ -61,7 +63,7 @@ class RidgeRegression:
         self.std = None
         self.cost_history = {}
 
-    def fit(self, dataset: Dataset) -> 'RidgeRegression':
+    def _fit(self, dataset: Dataset) -> 'RidgeRegression':
         """
         Fit the model to the dataset
 
@@ -117,7 +119,7 @@ class RidgeRegression:
 
         return self
 
-    def predict(self, dataset: Dataset) -> np.array:
+    def _predict(self, dataset: Dataset) -> np.array:
         """
         Predict the output of the dataset
 

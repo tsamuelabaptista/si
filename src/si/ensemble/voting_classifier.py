@@ -1,10 +1,11 @@
 import numpy as np
 
+from si.base.model import Model
 from si.data.dataset import Dataset
 from si.metrics.accuracy import accuracy
 
 
-class VotingClassifier:
+class VotingClassifier(Model):
     """
     Ensemble classifier that uses the majority vote to predict the class labels.
 
@@ -16,7 +17,7 @@ class VotingClassifier:
     Attributes
     ----------
     """
-    def __init__(self, models):
+    def __init__(self, models, **kwargs):
         """
         Initialize the ensemble classifier.
 
@@ -27,9 +28,10 @@ class VotingClassifier:
 
         """
         # parameters
+        super().__init__(**kwargs)
         self.models = models
 
-    def fit(self, dataset: Dataset) -> 'VotingClassifier':
+    def _fit(self, dataset: Dataset) -> 'VotingClassifier':
         """
         Fit the models according to the given training data.
 
@@ -48,7 +50,7 @@ class VotingClassifier:
 
         return self
 
-    def predict(self, dataset: Dataset) -> np.ndarray:
+    def _predict(self, dataset: Dataset) -> np.ndarray:
         """
         Predict class labels for samples in X.
 

@@ -1,7 +1,7 @@
 # Intelligent Systems for Bioinformatics
 
 ## Curricular Unit
-Master in Bioinformatics, University of Minho, 2023-2024.
+Master in Bioinformatics, University of Minho, 2024-2025.
 
 
 ## Description
@@ -13,7 +13,7 @@ Implementations must follow a common and simple API.
 ## Setup
 To get started, fork the repository from GitHub and clone it to your local machine.
 
-Fork the following GitHub repository: https://github.com/jcorreia11/si.git
+Fork the following GitHub repository: https://github.com/jcapels/si.git
 ![img.png](docs/img.png)
 
 Then, clone the repository to your local machine:
@@ -72,7 +72,7 @@ Option 3:
     Finally, you need to merge the original repo into your forked repo.
 
 ```bash
-git remote add upstream https://github.com/jcorreia11/si.git
+git remote add upstream https://github.com/jcapels/si.git
 git pull upstream main
 git push origin main
 ```
@@ -115,3 +115,4 @@ All datasets are available at: [https://www.dropbox.com/sh/oas4yru2r9n61hk/AADpR
 This package is heavily inspired and adapted from:
 - [https://github.com/vmspereira/si](https://github.com/vmspereira/si)
 - [https://github.com/cruz-f/si](https://github.com/cruz-f/si)
+- [https://github.com/jcorreia11/si](https://github.com/jcorreia11/si)

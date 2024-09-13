@@ -1,9 +1,10 @@
 import numpy as np
 
+from si.base.transformer import Transformer
 from si.data.dataset import Dataset
 
 
-class VarianceThreshold:
+class VarianceThreshold(Transformer):
     """
     Variance Threshold feature selection.
     Features with a training-set variance lower than this threshold will be removed from the dataset.
@@ -20,7 +21,7 @@ class VarianceThreshold:
         The variance of each feature.
     """
 
-    def __init__(self, threshold: float = 0.0):
+    def __init__(self, threshold: float = 0.0, **kwargs):
         """
         Variance Threshold feature selection.
         Features with a training-set variance lower than this threshold will be removed from the dataset.
@@ -31,6 +32,7 @@ class VarianceThreshold:
             The threshold value to use for feature selection. Features with a
             training-set variance lower than this threshold will be removed.
         """
+        super().__init__(**kwargs)
         if threshold < 0:
             raise ValueError("Threshold must be non-negative")
 
@@ -40,7 +42,7 @@ class VarianceThreshold:
         # attributes
         self.variance = None
 
-    def fit(self, dataset: Dataset) -> 'VarianceThreshold':
+    def _fit(self, dataset: Dataset) -> 'VarianceThreshold':
         """
         Fit the VarianceThreshold model according to the given training data.
         Parameters
@@ -55,7 +57,7 @@ class VarianceThreshold:
         self.variance = np.var(dataset.X, axis=0)
         return self
 
-    def transform(self, dataset: Dataset) -> Dataset:
+    def _transform(self, dataset: Dataset) -> Dataset:
         """
         It removes all features whose variance does not meet the threshold.
         Parameters
@@ -72,20 +74,6 @@ class VarianceThreshold:
         X = X[:, features_mask]
         features = np.array(dataset.features)[features_mask]
         return Dataset(X=X, y=dataset.y, features=list(features), label=dataset.label)
-
-    def fit_transform(self, dataset: Dataset) -> Dataset:
-        """
-        Fit to data, then transform it.
-        Parameters
-        ----------
-        dataset: Dataset
-
-        Returns
-        -------
-        dataset: Dataset
-        """
-        self.fit(dataset)
-        return self.transform(dataset)
 
 
 if __name__ == '__main__':
