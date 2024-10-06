@@ -36,20 +36,21 @@ def read_csv(filename: str,
 
     elif features and not label:
         features = data.columns
+        label = None
         X = data.to_numpy()
         y = None
 
     elif not features and label:
-        X = data.iloc[:, :-1].to_numpy()
-        y = data.iloc[:, -1].to_numpy()
         features = None
         label = data.columns[-1]
+        X = data.iloc[:, :-1].to_numpy()
+        y = data.iloc[:, -1].to_numpy()
 
     else:
-        X = data.to_numpy()
-        y = None
         features = None
         label = None
+        X = data.to_numpy()
+        y = None
 
     return Dataset(X=X, y=y, features=features, label=label)
 
@@ -74,7 +75,7 @@ def write_csv(filename: str,
         Whether the file has a header, by default False
     label : bool, optional
         Whether the file has a label, by default False
-    """
+    """    
     data = pd.DataFrame(dataset.X)
 
     if features:
