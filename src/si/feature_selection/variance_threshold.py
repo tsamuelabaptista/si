@@ -55,6 +55,7 @@ class VarianceThreshold(Transformer):
         self : object
         """
         self.variance = np.var(dataset.X, axis=0)
+        # self.variance = Dataset.get_variance(dataset) # alternative way
         return self
 
     def _transform(self, dataset: Dataset) -> Dataset:
