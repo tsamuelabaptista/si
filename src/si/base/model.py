@@ -1,6 +1,7 @@
 from abc import ABCMeta, ABC, abstractmethod
 
 from si.base.estimator import Estimator
+from si.data.dataset import Dataset
 
 import numpy as np
 
@@ -70,3 +71,19 @@ class Model(Estimator, ABC):
         """
         self.fit(dataset)
         return self.predict(dataset)
+    
+    @abstractmethod
+    def _score(self, dataset: Dataset) -> float:
+        """
+        """
+
+    def score(self, dataset: Dataset, predictions: np.ndarray) -> float:
+        """
+        """
+        if self.is_fitted():
+            predictions = self.predict(dataset=dataset)
+            self._score(dataset, predictions=predictions)
+
+        else:
+            raise ValueError('Your model is not fitted yet. Please call method.fit()')
+
