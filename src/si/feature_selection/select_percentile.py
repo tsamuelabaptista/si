@@ -38,6 +38,11 @@ class SelectPercentile(Transformer):
         percentile: int, default=10
             Percent of top features to select.
         """
+        super().__init__(**kwargs)
+        self.percentile = percentile
+        self.score_func = score_func
+        self.F = None
+        self.p = None
 
     def _fit(self, dataset : Dataset) -> 'SelectPercentile':
         """
@@ -70,9 +75,8 @@ class SelectPercentile(Transformer):
         dataset: Dataset
             A labeled dataset with the percentile of highest scoring features.
         """
-        pass
         # return Dataset(X=, y=dataset.y, features=, label=dataset.label)
-
+        pass
 
 if __name__ == '__main__':
     from si.data.dataset import Dataset
