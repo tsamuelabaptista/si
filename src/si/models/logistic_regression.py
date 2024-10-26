@@ -3,12 +3,48 @@ import numpy as np
 from si.base.model import Model
 from si.data.dataset import Dataset
 from si.metrics.accuracy import accuracy
-from si.statistics.sigmoid_function import sigmoid_function 
+from si.statistics.sigmoid_function import sigmoid_function
+
 
 class LogisticRegression(Model):
+    """
+    The LogisticRegression is a logistic model using the L2 regularization.
+    This model solves the logistic regression problem using an adapted Gradient Descent technique
+
+    Parameters
+    ----------
+    l2_penalty: float
+        The L2 regularization parameter
+    alpha: float
+        The learning rate
+    max_iter: int
+        The maximum number of iterations
+
+    Attributes
+    ----------
+    theta: np.array
+        The model parameters, namely the coefficients of the logistic model.
+        For example, sigmoid(x0 * theta[0] + x1 * theta[1] + ...)
+    theta_zero: float
+        The intercept of the logistic model
+    """
     def __init__(self, l2_penalty: float = 1, alpha: float = 0.001, max_iter: int = 1000, patience: int = 5,
                  scale: bool = True, **kwargs):
-        
+        """
+
+        Parameters
+        ----------
+        l2_penalty: float
+            The L2 regularization parameter
+        alpha: float
+            The learning rate
+        max_iter: int
+            The maximum number of iterations
+        patience: int
+            The number of iterations without improvement before stopping the training
+        scale: bool
+            Whether to scale the dataset or not
+        """
         # parameters
         super().__init__(**kwargs)
         self.l2_penalty = l2_penalty
@@ -58,15 +94,18 @@ class LogisticRegression(Model):
         # gradient descent
         while i < self.max_iter and early_stopping < self.patience:
             # predicted y
-            y_pred = sigmoid_function(np.dot(X, self.theta) + self.theta_zero)
+            y_pred = np.dot(X, self.theta) + self.theta_zero
 
-            # computing and updating the gradient with the learning rate
+            # apply sigmoid function
+            y_pred = sigmoid_function(y_pred)
+
+            # compute the gradient using the learning rate
             gradient = (self.alpha / m) * np.dot(y_pred - dataset.y, X)
 
-            # computing the penalty
+            # compute the penalty
             penalization_term = self.theta * (1 - self.alpha * (self.l2_penalty / m))
 
-            # updating the model parameters
+            # update the model parameters
             self.theta = penalization_term - gradient
             self.theta_zero = self.theta_zero - (self.alpha * (1 / m)) * np.sum(y_pred - dataset.y)
 
@@ -79,7 +118,6 @@ class LogisticRegression(Model):
             i += 1
 
         return self
-
 
     def _predict(self, dataset: Dataset) -> np.array:
         """
@@ -96,30 +134,30 @@ class LogisticRegression(Model):
             The predictions of the dataset
         """
         X = (dataset.X - self.mean) / self.std if self.scale else dataset.X
-        y_pred =  sigmoid_function(np.dot(X, self.theta) + self.theta_zero)
-        mask = y_pred >= 0.5
-        y_pred[mask] = 1
-        y_pred[-mask] = 0
-        return y_pred
-    
-    def _score(self, dataset: Dataset, predictions: np.ndarray) -> float:
+        predictions = sigmoid_function(np.dot(X, self.theta) + self.theta_zero)
+
+        # convert the predictions to 0 or 1 (binarization)
+        mask = predictions >= 0.5
+        predictions[mask] = 1
+        predictions[~mask] = 0
+        return predictions
+
+    def score(self, dataset: Dataset) -> float:
         """
-        Compute the Accuracy of the model on the dataset
+        Compute the Mean Square Error of the model on the dataset
 
         Parameters
         ----------
         dataset: Dataset
-            The dataset to compute the Accuracy on
-
-        predictions: np.ndarray
-            Predictions
+            The dataset to compute the MSE on
 
         Returns
         -------
         mse: float
-            The Accuracy of the model
+            The Mean Square Error of the model
         """
-        return accuracy(dataset.y, predictions)
+        y_pred = self.predict(dataset)
+        return accuracy(dataset.y, y_pred)
 
     def cost(self, dataset: Dataset) -> float:
         """
@@ -135,9 +173,57 @@ class LogisticRegression(Model):
         cost: float
             The cost function of the model
         """
-        y_pred = self.predict(dataset)
-        sum_cost_function = np.sum(dataset.y * np.log(y_pred) + (1 - dataset.y) * np.log(1 - y_pred))
-        average_cost_function = sum_cost_function / len(dataset.y)
-        cost_regularization_term = (self.l2_penalty / (2 * len(dataset.y))) * np.sum(self.theta ** 2)
-        return - average_cost_function + cost_regularization_term
+        predictions = sigmoid_function(np.dot(dataset.X, self.theta) + self.theta_zero)
+        cost = (dataset.y * np.log(predictions)) + (1 - dataset.y) * np.log(1 - predictions)
+        cost = np.sum(cost) * (-1 / dataset.shape()[0])
+        cost = cost + (self.l2_penalty * np.sum(self.theta ** 2) / (2 * dataset.shape()[0]))
+        return cost
+    
+    def _score(self, dataset: Dataset, predictions: np.ndarray) -> float:
+        """
+        Compute the Mean Square Error of the model on the dataset
+
+        Parameters
+        ----------
+        dataset: Dataset
+            The dataset to compute the accuracy on
+
+        predictions: np.ndarray
+            Predictions
+
+        Returns
+        -------
+        mse: float
+            The Mean Square Error of the model
+        """
+        return accuracy(dataset.y, predictions)
+
+
+if __name__ == '__main__':
+    # import dataset
+    from si.data.dataset import Dataset
+    from si.model_selection.split import train_test_split
+
+    # load and split the dataset
+    dataset_ = Dataset.from_random(600, 100, 2)
+    dataset_train, dataset_test = train_test_split(dataset_, test_size=0.2)
+
+    # fit the model
+    model = LogisticRegression(l2_penalty=1, alpha=0.001, max_iter=1000)
+    model.fit(dataset_train)
+
+    print(model.theta)
+    print(model.theta_zero)
+
+    print(model.predict(dataset_test))
+
+    # compute the score
+    score = model.score(dataset_test)
+    print(f"Score: {score}")
+
+    # plot the cost history
+    import matplotlib.pyplot as plt
+
+    plt.plot(list(model.cost_history.keys()), list(model.cost_history.values()))
+    plt.show()
 

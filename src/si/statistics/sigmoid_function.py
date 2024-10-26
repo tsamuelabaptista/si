@@ -1,19 +1,18 @@
 import numpy as np
 
-def sigmoid_function(x: np.ndarray) -> np.ndarray:
+
+def sigmoid_function(X: np.ndarray) -> np.ndarray:
     """
-    It calculates the sigmoid function of a point (x) following the formula:
-        f(x) = 1 / 1 + e^-(x)
-        ...
+    It returns the sigmoid function of the given input
 
     Parameters
     ----------
-    x: np.ndarray
-        Point.
+    X: np.ndarray
+        The input of the sigmoid function
 
     Returns
     -------
-    np.ndarray
-        The probability of each point in x to have the value of 1.
+    sigmoid: np.ndarray
+        The sigmoid function of the given input
     """
-    return 1 / (1 + np.exp(-x))
+    return 1 / (1 + np.exp(-X))
