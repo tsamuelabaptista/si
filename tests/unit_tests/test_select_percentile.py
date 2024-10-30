@@ -16,11 +16,17 @@ class TestSelectKBest(TestCase):
 
     def test_fit(self):
 
-        select_percentile = SelectPercentile(score_func = f_classification, percentile = 2)
+        select_percentile = SelectPercentile(score_func = f_classification, percentile = 50)
 
         select_percentile.fit(self.dataset)
         self.assertTrue(select_percentile.F.shape[0] > 0)
         self.assertTrue(select_percentile.p.shape[0] > 0)
 
     def test_transform(self):
-        pass
+        select_percentile = SelectPercentile(score_func = f_classification, percentile = 50)
+
+        select_percentile.fit(self.dataset)
+        new_dataset = select_percentile.transform(self.dataset)
+
+        self.assertLess(len(new_dataset.features), len(self.dataset.features))
+        self.assertLess(new_dataset.X.shape[1], self.dataset.X.shape[1])

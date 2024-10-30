@@ -39,7 +39,10 @@ class SelectPercentile(Transformer):
             Percent of top features to select.
         """
         super().__init__(**kwargs)
-        self.percentile = percentile
+        if isinstance(percentile, int) and percentile > 0 and percentile <= 100:
+            self.percentile = percentile
+        else:
+            raise ValueError("percentile must be an integer between 1 and 100")
         self.score_func = score_func
         self.F = None
         self.p = None
@@ -75,8 +78,15 @@ class SelectPercentile(Transformer):
         dataset: Dataset
             A labeled dataset with the percentile of highest scoring features.
         """
-        # return Dataset(X=, y=dataset.y, features=, label=dataset.label)
-        pass
+        n_features = round(len(dataset.features) * (self.percentile / 100))
+        if n_features == 0:
+            idxs = np.argsort(self.F)[-1:]
+            features = np.array(dataset.features)[idxs]
+        else:    
+            idxs = np.argsort(self.F)[-n_features:]
+            features = np.array(dataset.features)[idxs]
+        return Dataset(X=dataset.X[:, idxs], y=dataset.y, features=list(features), label=dataset.label)
+        
 
 if __name__ == '__main__':
     from si.data.dataset import Dataset
@@ -88,7 +98,7 @@ if __name__ == '__main__':
                       features=["f1", "f2", "f3", "f4"],
                       label="y")
 
-    selector = SelectPercentile(percentile=2)
+    selector = SelectPercentile(percentile=0)
     selector = selector.fit(dataset)
     dataset = selector.transform(dataset)
     print(dataset.features)
