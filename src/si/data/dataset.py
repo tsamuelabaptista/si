@@ -197,6 +197,75 @@ class Dataset:
         X = np.random.rand(n_samples, n_features)
         y = np.random.randint(0, n_classes, n_samples)
         return cls(X, y, features=features, label=label)
+    
+    def dropna(self):
+        """
+        Removes all samples containing at least one null value (NaN)
+
+        Returns
+        -------
+        dataset: Dataset 
+            Modified dataset with the samples (rows) containing null values removed
+        """
+        mask = ~np.any(np.isnan(self.X), axis=1)
+        self.X = self.X[mask]
+        self.y = self.y[mask]
+        return self
+    
+    def fillna(self, value: float | str):
+        """
+        Replaces all null values with another value or the mean or median of the feature/variable
+
+        Parameters
+        ----------
+        value: float | str
+            if float, replaces all null values with the given float value
+            if 'mean', replaces all null values with the mean of the feature/variable
+            if 'median', replaces all null values with the median of the feature/variable
+
+        Returns
+        -------
+        dataset: Dataset
+            Modified dataset with null values replaced
+        """
+        mask = np.isnan(self.X)
+
+        if isinstance(value, float):
+            self.X = np.where(mask, value, self.X)
+        
+        elif value == 'mean':
+            col_means = self.get_mean()
+            idxs = np.where(mask)
+            self.X[idxs] = np.take(col_means, idxs[1])
+
+        elif value == 'median':
+            col_medians = self.get_median()
+            idxs = np.where(mask)
+            self.X[idxs] = np.take(col_medians, idxs[1])
+
+        else:
+            raise ValueError("Invalid value for argument 'value'. {value} must be a float, or 'mean', or 'median'.")
+
+        return self
+
+    def remove_by_index(self, index: int):
+        """
+        Removes a sample by its index
+
+        Parameters
+        ----------
+        index: int
+            Integer corresponding to the sample to remove
+
+        Returns
+        -------
+        dataset: Dataset
+            Modified dataset with the specified sample removed
+        """
+        self.X = np.delete(self.X, index, axis=0)
+        self.y = np.delete(self.y, index)
+
+        return self
 
 
 if __name__ == '__main__':
