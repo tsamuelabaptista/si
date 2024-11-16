@@ -283,3 +283,48 @@ if __name__ == '__main__':
     print(dataset.get_min())
     print(dataset.get_max())
     print(dataset.summary())
+
+    X = np.array([[np.nan, 2.0, 3.0], [4.0, 5.0, 6.0]])
+    y = np.array([1, 2])
+    features = np.array(['a', 'b', 'c'])
+    label = 'y'
+    dataset = Dataset(X, y, features, label)
+    print("dropna")
+    print(dataset.X)
+    print(dataset.dropna().X)
+
+    X = np.array([[np.nan, 2.0, 3.0], [4.0, 5.0, 6.0]])
+    y = np.array([1, 2])
+    features = np.array(['a', 'b', 'c'])
+    label = 'y'
+    dataset = Dataset(X, y, features, label)
+    print("fillna with value")
+    print(dataset.X)
+    print(dataset.fillna(value=1.0).X)
+
+    X = np.array([[np.nan, 2.0, 3.0], [4.0, 5.0, 6.0]])
+    y = np.array([1, 2])
+    features = np.array(['a', 'b', 'c'])
+    label = 'y'
+    dataset = Dataset(X, y, features, label)
+    print("fillna with mean")
+    print(dataset.X)
+    print(dataset.fillna(value='mean').X)
+
+    X = np.array([[np.nan, 2.0, 3.0], [4.0, 5.0, 6.0]])
+    y = np.array([1, 2])
+    features = np.array(['a', 'b', 'c'])
+    label = 'y'
+    dataset = Dataset(X, y, features, label)
+    print("fillna with median")
+    print(dataset.X)
+    print(dataset.fillna(value='median').X)
+
+    X = np.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
+    y = np.array([1, 2])
+    features = np.array(['a', 'b', 'c'])
+    label = 'y'
+    dataset = Dataset(X, y, features, label)
+    print("remove_by_index")
+    print(dataset.X)
+    print(dataset.remove_by_index(index=0).X)
