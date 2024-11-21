@@ -3,7 +3,6 @@ from unittest import TestCase
 import numpy as np
 from si.metrics.accuracy import accuracy
 from si.metrics.mse import mse
-from si.statistics.sigmoid_function import sigmoid_function
 
 class TestMetrics(TestCase):
 

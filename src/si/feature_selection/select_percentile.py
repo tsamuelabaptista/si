@@ -98,7 +98,7 @@ if __name__ == '__main__':
                       features=["f1", "f2", "f3", "f4"],
                       label="y")
 
-    selector = SelectPercentile(percentile=0)
+    selector = SelectPercentile(percentile=50)
     selector = selector.fit(dataset)
     dataset = selector.transform(dataset)
     print(dataset.features)

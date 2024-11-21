@@ -212,7 +212,7 @@ class Dataset:
         self.y = self.y[mask]
         return self
     
-    def fillna(self, value: float | str):
+    def fillna(self, value: float | str = None):
         """
         Replaces all null values with another value or the mean or median of the feature/variable
 
@@ -248,7 +248,7 @@ class Dataset:
 
         return self
 
-    def remove_by_index(self, index: int):
+    def remove_by_index(self, index: int = None):
         """
         Removes a sample by its index
 
