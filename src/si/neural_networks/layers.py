@@ -95,3 +95,24 @@ class DenseLayer(Layer):
         self.input = input
         self.output = np.dot(self.input, self.weights) + self.biases
         return self.output
+    
+    def backward_propagation(self, output_error: float):
+        
+        input_error = np.dot(output_error, self.weights.T)
+
+        weights_error = np.dot(self.input.T, output_error)
+
+        bias_error = np.sum(output_error, axis=0)
+        
+        self.b_opt.update(bias_error)
+
+        self.w_opt.update(weights_error)
+
+        return input_error
+    
+
+    # output_error.shape = (batch_size, output_neurons)
+    # self.weights.shape = (input_neurons, output_neurons)
+    # self.input.shape = (batch_size, input_neurons)
+
+    # y = X W + b
