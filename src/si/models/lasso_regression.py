@@ -5,17 +5,15 @@ from si.data.dataset import Dataset
 from si.metrics.mse import mse
 
 
-class RidgeRegression(Model):
+class LassoRegression(Model):
     """
-    The RidgeRegression is a linear model using the L2 regularization.
-    This model solves the linear regression problem using an adapted Gradient Descent technique
+    The LassoRegression is a linear model using L1 regularization.
+    This model solves the linear regression problem using a Coordinate Descent technique.
 
     Parameters
     ----------
-    l2_penalty: float
-        The L2 regularization parameter
-    alpha: float
-        The learning rate
+    l1_penalty: float
+        The L1 regularization parameter
     max_iter: int
         The maximum number of iterations
     patience: int
@@ -32,16 +30,13 @@ class RidgeRegression(Model):
         The model parameter, namely the intercept of the linear model.
         For example, theta_zero * 1
     """
-    def __init__(self, l2_penalty: float = 1, alpha: float = 0.001, max_iter: int = 1000, patience: int = 5,
-                 scale: bool = True, **kwargs):
+    def __init__(self, l1_penalty: float = 1, max_iter: int = 1000, patience: int = 5, scale: bool = True, **kwargs):    
         """
 
         Parameters
         ----------
-        l2_penalty: float
-            The L2 regularization parameter
-        alpha: float
-            The learning rate
+        l1_penalty: float
+            The L1 regularization parameter
         max_iter: int
             The maximum number of iterations
         patience: int
@@ -51,8 +46,7 @@ class RidgeRegression(Model):
         """
         # parameters
         super().__init__(**kwargs)
-        self.l2_penalty = l2_penalty
-        self.alpha = alpha
+        self.l1_penalty = l1_penalty
         self.max_iter = max_iter
         self.patience = patience
         self.scale = scale
@@ -64,7 +58,7 @@ class RidgeRegression(Model):
         self.std = None
         self.cost_history = {}
 
-    def _fit(self, dataset: Dataset) -> 'RidgeRegression':
+    def _fit(self, dataset: Dataset) -> 'LassoRegression':
         """
         Fit the model to the dataset
 
@@ -75,7 +69,7 @@ class RidgeRegression(Model):
 
         Returns
         -------
-        self: RidgeRegression
+        self: LassoRegression
             The fitted model
         """
         if self.scale:
@@ -95,20 +89,22 @@ class RidgeRegression(Model):
 
         i = 0
         early_stopping = 0
-        # gradient descent
+        # coordinate descent
         while i < self.max_iter and early_stopping < self.patience:
             # predicted y
             y_pred = np.dot(X, self.theta) + self.theta_zero
 
-            # computing and updating the gradient with the learning rate
-            gradient = (self.alpha / m) * np.dot(y_pred - dataset.y, X)
+            # iterate over each feature j
+            for j in range(n):
+                # compute the residuals for each feature j
+                residual = np.dot(X[:, j], dataset.y - (y_pred - self.theta[j] * X[:, j]))
+                # update theta_j
+                self.theta[j] = self.soft_threshold(residual, self.l1_penalty) / np.sum(X[:, j] ** 2)
+                # update predicted y
+                y_pred = np.dot(X, self.theta) + self.theta_zero
 
-            # computing the penalty
-            penalization_term = self.theta * (1 - self.alpha * (self.l2_penalty / m))
-
-            # updating the model parameters
-            self.theta = penalization_term - gradient
-            self.theta_zero = self.theta_zero - (self.alpha * (1 / m)) * np.sum(y_pred - dataset.y)
+            # update theta_zero
+            self.theta_zero = np.sum(dataset.y) / m - np.dot(np.sum(self.theta), np.sum(X) / m)
 
             # compute the cost
             self.cost_history[i] = self.cost(dataset)
@@ -134,8 +130,11 @@ class RidgeRegression(Model):
         predictions: np.ndarray
             The predictions of the dataset
         """
+        # scale the data
         X = (dataset.X - self.mean) / self.std if self.scale else dataset.X
-        return np.dot(X, self.theta) + self.theta_zero
+
+        predictions = X.dot(self.theta) + self.theta_zero
+        return predictions
 
     def _score(self, dataset: Dataset, predictions: np.ndarray) -> float:
         """
@@ -155,10 +154,10 @@ class RidgeRegression(Model):
             The Mean Square Error of the model
         """
         return mse(dataset.y, predictions)
-
+    
     def cost(self, dataset: Dataset) -> float:
         """
-        Compute the cost function (J function) of the model on the dataset using L2 regularization
+        Compute the cost function (J function) of the model on the dataset using L1 regularization
 
         Parameters
         ----------
@@ -171,8 +170,32 @@ class RidgeRegression(Model):
             The cost function of the model
         """
         y_pred = self.predict(dataset)
-        return (np.sum((y_pred - dataset.y) ** 2) + (self.l2_penalty * np.sum(self.theta ** 2))) / (2 * len(dataset.y))
+        return np.sum((dataset.y - y_pred) ** 2) / (2 * len(dataset.y)) + self.l1_penalty * np.sum(np.abs(self.theta))
 
+    def soft_threshold(self, residual: float, l1_penalty: float) -> float:
+        """
+        Compute the soft threshold function
+
+        Parameters
+        ----------
+        residual: float
+            The feature residual
+
+        l1_penalty: float
+            The L1 regularization parameter
+
+        Returns
+        -------
+        soft_threshold: float
+            The soft threshold value of the feature residual
+        """
+        if residual > l1_penalty:
+            return residual - l1_penalty
+        elif abs(residual) <= l1_penalty:
+            return 0.0
+        else:  # residual < -l1_penalty
+            return residual + l1_penalty
+        
 
 if __name__ == '__main__':
     # import dataset
@@ -184,7 +207,7 @@ if __name__ == '__main__':
     dataset_ = Dataset(X=X, y=y)
 
     # fit the model
-    model = RidgeRegression()
+    model = LassoRegression()
     model.fit(dataset_)
 
     # get coefs

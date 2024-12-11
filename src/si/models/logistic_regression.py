@@ -19,10 +19,14 @@ class LogisticRegression(Model):
         The learning rate
     max_iter: int
         The maximum number of iterations
+    patience: int
+        The number of iterations without improvement before stopping the training
+    scale: bool
+        Whether to scale the dataset or not
 
     Attributes
     ----------
-    theta: np.array
+    theta: np.ndarray
         The model parameters, namely the coefficients of the logistic model.
         For example, sigmoid(x0 * theta[0] + x1 * theta[1] + ...)
     theta_zero: float

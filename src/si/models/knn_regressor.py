@@ -87,7 +87,7 @@ class KNNRegressor(Model):
         k_nearest_neighbors_values = self.dataset.y[k_nearest_neighbors]
 
         # calculate the average of the values
-        value = np.average(k_nearest_neighbors_values)
+        value = np.mean(k_nearest_neighbors_values)
         return value
     
     def _predict(self, dataset: Dataset) -> np.ndarray:
