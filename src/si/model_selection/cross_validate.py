@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, Callable
 
 import numpy as np
 
 from si.data.dataset import Dataset
 
 
-def k_fold_cross_validation(model, dataset: Dataset, scoring: callable = None, cv: int = 3,
+def k_fold_cross_validation(model, dataset: Dataset, scoring: Callable = None, cv: int = 3,
                             seed: int = None) -> List[float]:
     """
     Perform k-fold cross-validation on the given model and dataset.
