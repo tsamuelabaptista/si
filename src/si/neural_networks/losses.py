@@ -89,12 +89,12 @@ class MeanSquaredError(LossFunction):
 
 class BinaryCrossEntropy(LossFunction):
     """
-    Cross entropy loss function.
+    Binary cross entropy loss function.
     """
 
     def loss(self, y_true: np.ndarray, y_pred: np.ndarray) -> float:
         """
-        Compute the cross entropy loss function.
+        Compute the binary cross entropy loss function.
 
         Parameters
         ----------
@@ -114,7 +114,7 @@ class BinaryCrossEntropy(LossFunction):
 
     def derivative(self, y_true: np.ndarray, y_pred: np.ndarray) -> np.ndarray:
         """
-        Compute the derivative of the cross entropy loss function.
+        Compute the derivative of the binary cross entropy loss function.
 
         Parameters
         ----------
@@ -131,3 +131,48 @@ class BinaryCrossEntropy(LossFunction):
         # Avoid division by zero
         p = np.clip(y_pred, 1e-15, 1 - 1e-15)
         return - (y_true / p) + (1 - y_true) / (1 - p)
+
+class CategoricalCrossEntropy(LossFunction):
+    """
+    Categorical cross entropy loss function.
+    """
+
+    def loss(self, y_true: np.ndarray, y_pred: np.ndarray) -> float:
+        """
+        Compute the categorical cross entropy loss function.
+
+        Parameters
+        ----------
+        y_true: numpy.ndarray
+            The true labels.
+        y_pred: numpy.ndarray
+            The predicted labels.
+
+        Returns
+        -------
+        float
+            The loss value.
+        """
+        # Avoid division by zero
+        p = np.clip(y_pred, 1e-15, 1 - 1e-15)
+        return -np.sum(y_true * np.log(p))
+    
+    def derivative(self, y_true: np.ndarray, y_pred: np.ndarray) -> np.ndarray:
+        """
+        Compute the derivative of the categorical cross entropy loss function.
+
+        Parameters
+        ----------
+        y_true: numpy.ndarray
+            The true labels.
+        y_pred: numpy.ndarray
+            The predicted labels.
+
+        Returns
+        -------
+        numpy.ndarray
+            The derivative of the loss function.
+        """
+        # Avoid division by zero
+        p = np.clip(y_pred, 1e-15, 1 - 1e-15)
+        return - (y_true / p)
