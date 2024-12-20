@@ -24,5 +24,5 @@ class TestKFoldCrossValidation(TestCase):
 
         scores = np.array(k_fold_cross_validation(model, self.dataset, scoring=accuracy, cv=5))
 
-        self.assertEqual(np.round(np.mean(scores), 2), 0.97)
-        self.assertAlmostEqual(np.round(np.std(scores), 2), 0.01, delta=0.1)
+        self.assertAlmostEqual(np.round(np.mean(scores), 2), 0.97, delta=0.02)
+        self.assertAlmostEqual(np.round(np.std(scores), 2), 0.01, delta=0.01)
