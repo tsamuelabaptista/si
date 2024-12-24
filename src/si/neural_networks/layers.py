@@ -59,7 +59,7 @@ class DenseLayer(Layer):
         self.biases = None
 
     def initialize(self, optimizer: Optimizer) -> 'DenseLayer':
-        # initialize weights from a 0 centered uniform distribution [-0.5, 0.5]
+        # initialize weights from a 0 centered uniform distribution [-0.5, 0.5)
         self.weights = np.random.rand(self.input_shape()[0], self.n_units) - 0.5
         # initialize biases to 0
         self.biases = np.zeros((1, self.n_units))
@@ -226,7 +226,7 @@ class Dropout(Layer):
         tuple
             The input shape.
         """
-        return self.input_shape()
+        return self._input_shape
 
     def parameters(self) -> int:
         """

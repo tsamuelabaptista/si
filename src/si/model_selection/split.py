@@ -67,14 +67,14 @@ def stratified_train_test_split(dataset: Dataset, test_size: float = 0.2, random
     np.random.seed(random_state)
 
     # get unique class labels and their counts
-    unique_labels, counts = np.unique(dataset.y, return_counts=True)
+    labels, counts = np.unique(dataset.y, return_counts=True)
 
     # initialize empty lists for train and test indices
     train_idxs = []
     test_idxs = []
     
     # loop through unique labels and their counts:
-    for label, count in zip(unique_labels, counts):
+    for label, count in zip(labels, counts):
         # calculate the number of test samples for the current class
         num_test_samples = int(count * test_size)
         # get indices for the current class
