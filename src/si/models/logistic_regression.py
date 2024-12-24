@@ -168,7 +168,7 @@ class LogisticRegression(Model):
     
     def _score(self, dataset: Dataset, predictions: np.ndarray) -> float:
         """
-        Compute the Mean Square Error of the model on the dataset
+        Compute the accuracy of the model on the dataset
 
         Parameters
         ----------
@@ -180,8 +180,8 @@ class LogisticRegression(Model):
 
         Returns
         -------
-        mse: float
-            The Mean Square Error of the model
+        accuracy: float
+            The accuracy of the model
         """
         return accuracy(dataset.y, predictions)
 
