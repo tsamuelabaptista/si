@@ -90,7 +90,7 @@ class ActivationLayer(Layer):
         tuple
             The output shape of the layer.
         """
-        return self._input_shape
+        return self.input_shape()
 
     def parameters(self) -> int:
         """

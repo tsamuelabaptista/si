@@ -226,7 +226,7 @@ class Dropout(Layer):
         tuple
             The input shape.
         """
-        return self._input_shape
+        return self.input_shape()
 
     def parameters(self) -> int:
         """
