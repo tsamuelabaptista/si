@@ -20,21 +20,26 @@ class TestLassoRegressor(TestCase):
 
     def test_fit(self):
 
-        ridge = LassoRegression()
-        ridge.fit(self.train_dataset)
+        lasso = LassoRegression()
+        lasso.fit(self.train_dataset)
 
+        self.assertEqual(lasso.theta.shape[0], self.train_dataset.shape()[1])
+        self.assertNotEqual(lasso.theta_zero, None)
+        self.assertNotEqual(len(lasso.cost_history), 0)
+        self.assertNotEqual(len(lasso.mean), 0)
+        self.assertNotEqual(len(lasso.std), 0)
 
     def test_predict(self):
-        ridge = LassoRegression()
-        ridge.fit(self.train_dataset)
+        lasso = LassoRegression()
+        lasso.fit(self.train_dataset)
 
-        predictions = ridge.predict(self.test_dataset)
+        predictions = lasso.predict(self.test_dataset)
 
         self.assertEqual(predictions.shape[0], self.test_dataset.shape()[0])
     
     def test_score(self):
-        ridge = LassoRegression(scale=True, patience=5)
-        ridge.fit(self.train_dataset)
-        mse_ = ridge.score(self.test_dataset)
+        lasso = LassoRegression()
+        lasso.fit(self.train_dataset)
+        mse_ = lasso.score(self.test_dataset)
 
         self.assertEqual(round(mse_, 2), 5777.56)

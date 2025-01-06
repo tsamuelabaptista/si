@@ -38,6 +38,5 @@ class TestRandomForest(TestCase):
         random_forest = RandomForestClassifier()
         random_forest.fit(self.train_dataset)
         accuracy_ = random_forest.score(self.test_dataset)
-        print(accuracy_)
 
         self.assertEqual(round(accuracy_, 2), 0.97)

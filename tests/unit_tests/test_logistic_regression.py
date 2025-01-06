@@ -21,26 +21,26 @@ class TestLogisticRegressor(TestCase):
 
     def test_fit(self):
 
-        ridge = LogisticRegression()
-        ridge.fit(self.train_dataset)
+        logreg = LogisticRegression()
+        logreg.fit(self.train_dataset)
 
-        self.assertEqual(ridge.theta.shape[0], self.train_dataset.shape()[1])
-        self.assertNotEqual(ridge.theta_zero, None)
-        self.assertNotEqual(len(ridge.cost_history), 0)
-        self.assertNotEqual(len(ridge.mean), 0)
-        self.assertNotEqual(len(ridge.std), 0)
+        self.assertEqual(logreg.theta.shape[0], self.train_dataset.shape()[1])
+        self.assertNotEqual(logreg.theta_zero, None)
+        self.assertNotEqual(len(logreg.cost_history), 0)
+        self.assertNotEqual(len(logreg.mean), 0)
+        self.assertNotEqual(len(logreg.std), 0)
 
     def test_predict(self):
-        ridge = LogisticRegression()
-        ridge.fit(self.train_dataset)
+        logreg = LogisticRegression()
+        logreg.fit(self.train_dataset)
 
-        predictions = ridge.predict(self.test_dataset)
+        predictions = logreg.predict(self.test_dataset)
 
         self.assertEqual(predictions.shape[0], self.test_dataset.shape()[0])
     
     def test_score(self):
-        ridge = LogisticRegression()
-        ridge.fit(self.train_dataset)
-        accuracy_ = ridge.score(self.test_dataset)
+        logreg = LogisticRegression()
+        logreg.fit(self.train_dataset)
+        accuracy_ = logreg.score(self.test_dataset)
 
         self.assertEqual(round(accuracy_, 2), 0.96)
