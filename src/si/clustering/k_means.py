@@ -25,9 +25,9 @@ class KMeans(Transformer, Model):
 
     Attributes
     ----------
-    centroids: np.array
+    centroids: np.ndarray
         Centroids of the clusters.
-    labels: np.array
+    labels: np.ndarray
         Labels of the clusters.
     """
 

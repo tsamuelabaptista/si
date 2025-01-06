@@ -19,7 +19,7 @@ def cosine_distance(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     np.ndarray
         Cosine distance for each point in y.
     """
-    similarity = np.sum(x * y, axis=1) / (np.sqrt(np.sum(x ** 2)) * np.sqrt(np.sum(y ** 2, axis=1)))
+    similarity = np.sum(x * y, axis=1) / (np.sqrt(np.sum(x ** 2) * np.sum(y ** 2, axis=1)))
     similarity[np.isnan(similarity)] = 0.0  # Set NaN values to 0.0
     return 1 - similarity
     

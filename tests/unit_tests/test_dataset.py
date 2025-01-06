@@ -42,8 +42,8 @@ class TestDataset(unittest.TestCase):
         original_shape_y = dataset.y.shape[0]
         dataset.dropna()
 
-        self.assertGreater(original_shape_x, dataset.X.shape[0]) # Ensure new dataset X shape is greater than original dataset X shape
-        self.assertGreater(original_shape_y, dataset.y.shape[0]) # Ensure new dataset y shape is greater than original dataset y shape  
+        self.assertGreater(original_shape_x, dataset.X.shape[0]) # Ensure original dataset X shape is greater than new dataset X shape
+        self.assertGreater(original_shape_y, dataset.y.shape[0]) # Ensure original dataset y shape is greater than new dataset y shape  
         self.assertEqual(dataset.X.shape[0], dataset.y.shape[0]) # Ensure shape of X consistency with shape of y
         self.assertFalse(np.isnan(dataset.X).any()) # Ensure the dataset has no NaNs
 
