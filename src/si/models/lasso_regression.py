@@ -91,17 +91,12 @@ class LassoRegression(Model):
         early_stopping = 0
         # coordinate descent
         while i < self.max_iter and early_stopping < self.patience:
-            # predicted y
-            y_pred = np.dot(X, self.theta) + self.theta_zero
-
             # iterate over each feature j
             for j in range(n):
                 # compute the residuals for each feature j
-                residual = np.dot(X[:, j], dataset.y - (y_pred - self.theta[j] * X[:, j]))
+                residual = np.dot(X[:, j], dataset.y - (np.dot(X, self.theta) - self.theta[j] * X[:, j]))
                 # update theta_j
                 self.theta[j] = self.soft_threshold(residual, self.l1_penalty) / np.sum(X[:, j] ** 2)
-                # update predicted y
-                y_pred = np.dot(X, self.theta) + self.theta_zero
 
             # update theta_zero
             self.theta_zero = np.sum(dataset.y) / m - np.dot(np.sum(self.theta), np.sum(X) / m)
